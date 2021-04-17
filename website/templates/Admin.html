@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+		<title>BookShoop</title>
+		<link rel="stylesheet" href="../static/Style/Adminstyle.css">
+		<link rel="shortcut icon" href="../static/Photo/icon.ico" type="image/x-icon">
+</head>
+<body>
+
+	<form action="/check?t={{type}}&upid={{upid_}}" method="post" class="Adminka" enctype="multipart/form-data">
+	<h1>Admin Panel</h1>
+	<h3 id="Res" style="color:red">
+	{% if res == 1 %}
+	Успешно Сделано!
+	{% elif res == 2 %}
+	Ошибка при Обработке!
+	{%endif%}
+	</h3>
+	{% if type == None %}
+	<h3>What do you want to do?</h3>
+	<select size="4" name="doing" style="width: 500px;">
+    <option value="INSERT" selected>INSERT MANUALLY</option>
+     <option value="INSERT_BOOK24" selected>INSERT FROM BOOK24</option>
+    <option value="befUPDATE">UPDATE</option>
+    <option value="DELETE">DELETE</option>
+   </select>
+	{% elif type =="INSERT" %}
+	<input name="Name" type="text" placeholder="Name"><br><br>
+	<input name="Price" type="text" placeholder="Price"><br><br>
+	<input name="File" type="text" placeholder="Link to pic"><br><br>
+	<input  name="Type" type="text" placeholder="Type"><br><br>
+	<textarea name="Description" type="text" placeholder="Description"></textarea>
+	{% elif type =="INSERT_BOOK24" %}
+	<input name="File" type="text" placeholder="Link to book"><br><br>
+	{% elif type =="DELETE" %}
+		<h2 style='color:red'>Choose Element for Delete</h2>
+		{%for i in products.query.all()%}
+			<a href="action?Idfordel={{i.id}}" class="del"><article>
+				<div class="imgarea"><img src="{{i.img_src}}" alt=""></div>
+				<div class="namearea"><h4>{{ i.name }}</h4>
+				</div>
+				<h5>{{i.price }} руб.</h5>
+			</article>
+			</a>		
+		{% endfor %}
+	{% elif type =="befUPDATE" %}
+		<h2 style='color:red'>Choose Element for Update</h2>"
+		{%for i in products.query.all()%}
+			<a href="check?t=Update&Idforup={{i.id}}" class="del"><article>
+				<div class="imgarea"><img src="{{i.img_src}}" alt=""></div>
+				<div class="namearea"><h4>{{ i.name }}</h4>
+				</div>
+				<h5>{{i.price }} руб.</h5>
+			</article>
+			</a>		
+		{% endfor %}
+	{% elif type == "UPDATE" %}
+		{% set a = products.query.filter_by(id = upid_).first() %}
+		<input name="Name" type="text" placeholder="Name" value="{{a.name}}"><br><br>
+		<input name="Price" type="text" placeholder="Price" value="{{a.price}}"><br><br>
+		<input name="File" type="text" placeholder="Link to pic" value="{{a.img_src}}"><br><br>
+		<input  name="Type" type="text" placeholder="Type" value="{{a.type_}}"><br><br>
+		<textarea name="Description" type="text"   placeholder="Description">{{a.description}}</textarea>
+	{% endif %}
+	<br>
+	<input type="submit" name="sub" id="None" value="Send">
+	<br>
+	<a href="/"><img src="../static/Photo/back.ico" alt=""> Go Back</a>
+	</form>
+
+<nav style="clear: both"></nav>
+</body>
+</html>

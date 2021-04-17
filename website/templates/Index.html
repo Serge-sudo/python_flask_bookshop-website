@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>BookShoop</title>
+		<link rel="stylesheet" href="../static/Style/Style.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="../static/Script/Script.js"></script>
+		<link rel="shortcut icon" href="../static/Photo/icon.ico" type="image/x-icon">
+		<style type="text/css">
+        menu li:nth-child(1) a {
+        border-bottom: 3px solid #4285f4;
+        }
+    </style>
+	</head>
+	<body>
+		<main>
+			<div class="main">
+			{% include "Header.html" %}
+			{% include "Menu.html" %}
+		<div class="container">
+			{%for i in products.query.all()%}
+			<a href="/Books?id={{i.id}}"><article>
+				<div class="imgarea"><img src="{{i.img_src}}" alt=""></div>
+				<div class="namearea"><h4>{{i.name}}</h4>
+				</div>
+				<h5>{{i.price}} руб.</h5>
+			</article>
+			</a>
+			
+			{%endfor%}
+			<nav style="clear:both"></nav>
+		</div>
+		{% include "Footer.html" %}
+		</main>
+</body>
+</html>
