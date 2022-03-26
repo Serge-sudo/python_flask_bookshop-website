@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>BookShoop</title>
+		<link rel="stylesheet" href="../static/Style/Style.css">
+		<link rel="shortcut icon" href="../static/Photo/icon.ico" type="image/x-icon">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="../static/Script/Script.js"></script>
+		<style type="text/css">
+		.menu li:nth-child(3) a {
+		border-bottom: 3px solid #4285f4;
+		}
+		.container img{
+			max-width: 400px;
+		}
+		</style>
+	</head>
+	<body>
+		<main>
+			{% include "Header.html" %}
+			{% include "Menu.html" %}
+		<div class="container">
+			{% set a = products.query.filter_by(id = id_).first() %}
+			<img style="float: left" src="{{a.img_src}}" alt="Foto">
+			<h1>{{a.name}}</h1>
+			<h4 id="price">{{a.price}} руб</h4>
+			<h3>Жанр՝ {{a.type_}}</h3>
+			<p>{{a.description}}</p>
+			<span style="float: right;">{{a.data}}</span><br>
+			<hr size="5px" style="background-color:black;width: 100%;">
+			 <div class="Same">
+			{% set same = products.query.filter(products.type_ == a.type_).filter(products.id != a.id).limit(5) %}
+				{%if same.count() != 0%}
+				<h2>Похожие книги</h2>
+			{% for i in same %}
+			<a href="/Books?id={{i.id}}"><article>
+				<div class="imgarea"><img src="{{i.img_src}}" alt=""></div>
+				<div class="namearea"><h4>{{i.name}}</h4>
+				</div>
+				<h5>{{i.price}} руб.</h5>
+			</article>
+			</a>
+
+			{% endfor %}
+			{% endif %}
+			<nav style="clear:both"></nav>
+		</div>
+			<nav style="clear: both"></nav>
+		</div>
+			{% include "Footer.html" %}
+		</main>
+			
+
+</body>
+</html>
