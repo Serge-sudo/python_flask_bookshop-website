@@ -1,1 +1,1 @@
-# python_2_project
+# python_flask_bookshop
